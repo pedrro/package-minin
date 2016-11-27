@@ -5,15 +5,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import lombok.Getter;
-import lombok.Setter;
 import model.Inventory;
 import model.Order;
 
 import static java.lang.Integer.parseInt;
 
-@Getter
-@Setter
 public class Input {
 
     public ArrayList<Inventory> inventories = new ArrayList<Inventory>();
@@ -26,6 +22,13 @@ public class Input {
             checkLine(scanner.nextLine());
         }
         scanner.close();
+
+        processFile(inventories, orders);
+    }
+
+    private void processFile(ArrayList<Inventory> inventories, ArrayList<Order> orders) {
+        ProcessOrder processOrder = new ProcessOrder();
+        processOrder.processOrder(orders,inventories);
     }
 
     public String lineStatus(String[] line) {
@@ -45,10 +48,9 @@ public class Input {
         switch (verifiedLine) {
             case "isInventory" :
                 buildInventory(splittedLine);
+                break;
             case "isOrder" :
                 buildOrder(splittedLine);
-            case "isBlank" :
-                System.out.println("blank line");
         }
     }
 
